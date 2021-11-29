@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 
 import 'package:tdd/domain/usecases/authentication.dart';
 
+import 'package:tdd/data/usecases/usecases.dart';
 import 'package:tdd/data/http/http.dart';
 
 class HttpClientSpy extends Mock implements HttpClient {}
