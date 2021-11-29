@@ -33,12 +33,12 @@ void main() {
         body: {'email': params.email, 'password': params.secret}));
   });
 
-  test('Should throw UnexpectedError if HttpClient returns 404', () async {
+  test('Should throw UnexpectedError if HttpClient returns 500', () async {
     when(httpClient.request(
             url: anyNamed('url'),
             method: anyNamed('method'),
             body: anyNamed('body')))
-        .thenThrow(HttpError.notFound);
+        .thenThrow(HttpError.serverError);
 
     final future = sut.auth(params);
 
