@@ -9,14 +9,19 @@ class RemoteAuthentication {
   final HttpClient httpClient;
   final String url;
 
-  RemoteAuthentication({@required this.httpClient, @required this.url});
+  RemoteAuthentication({
+    @required this.httpClient,
+    @required this.url,
+  });
 
   Future<void> auth(AuthenticationParams params) async {
     final body = RemoteAuthenticationParams.fromDomain(params).toJson();
     try {
       await httpClient.request(url: url, method: 'post', body: body);
-    } on HttpError {
-      throw DomainError.unexpected;
+    } on HttpError catch (error) {
+      throw error == HttpError.unauthorized
+          ? DomainError.invalidCredentials
+          : DomainError.unexpected;
     }
   }
 }
